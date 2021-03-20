@@ -1,3 +1,15 @@
+public class Item
+{
+    private int myCatNum, myInventory;
+    public Item(int nNum, int nInv)
+    {
+        myCatNum = nNum;
+        myInventory = nInv;
+    }
+    public int getCatNum(){return myCatNum;}
+    public int getInventory(){return myInventory;}
+}  
+
 private Item[] store = 
 {
   new Item(184, 14), 
@@ -24,23 +36,72 @@ private Item[] store =
 public int linearSearch(int catNumToFind)
 {
   //complete this method
+  for (int i = 0; i<store.length;i++) {
+    if (store[i].getCatNum() == catNumToFind) {
+      return(store[i].getInventory());
+    }
+  } 
   return -1;
 }
 public int recursiveLinearSearch(int catNumToFind, int startIndex)
 {
   //complete this method
-  return -1;
+  if (startIndex >=store.length){
+    return(-1);
+  }
+  
+  if (store[startIndex].getCatNum() == catNumToFind){
+    return(store[startIndex].getInventory());
+  }
+  
+  else {
+    return( recursiveLinearSearch(catNumToFind, startIndex+1));
+  }
 }
+
+
+
 public int binarySearch(int catNumToFind)
 {
-  //complete this method    
+  //complete this method  
+  int high = store.length-1;
+  int low = 0;
+  while (high>=low){
+    int average = (high+low)/2;
+    if (store[average].getCatNum() > catNumToFind){
+      high = average-1; 
+    }
+    else if (store[average].getCatNum() < catNumToFind){
+      low = average+1; 
+    }
+    else {
+      return(store[average].getInventory());
+    }
+  }
   return -1;
 }
+
+
 public int recursiveBinarySearch(int catNumToFind, int nLow, int nHigh)
 {
-  //complete this method    
-  return -1;
+  //complete this method
+  int average = (nHigh + nLow)/2;
+  if (nHigh<nLow){return(-1);}
+  else if (store[average].getCatNum()>catNumToFind){
+  return( recursiveBinarySearch(catNumToFind, nLow, average-1));
+  }
+  else if (store[average].getCatNum()<catNumToFind){
+  return( recursiveBinarySearch(catNumToFind, average+1, nHigh));
+  }
+   else if (store[nLow].getCatNum()==catNumToFind){
+     return(store[nLow].getInventory());
+   }
+    return(store[nHigh].getInventory());
 }
+
+
+
+
 public void setup()
 {
   int[] tests = {0, 183, 184, 2370, 15320, 19967, 19968};
@@ -94,6 +155,8 @@ public void draw()
 {
   //empty!
 }
+
+
 
 
 
